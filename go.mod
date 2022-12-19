@@ -1,4 +1,4 @@
-module data
+module github.com/bunsenmcdubbs/udb
 
 go 1.19
 

@@ -30,7 +30,7 @@ func (n *InternalNode[K, V]) Insert(cap int, newKey K, newVal V) (bool, *nodeSpl
 	n.values = insert(n.values, idx+1, split.node)
 
 	if len(n.values) > cap { // split
-		midIdx := (len(n.keys) + 1) / 2
+		midIdx := len(n.keys)/2 + 1
 
 		newNode := &InternalNode[K, V]{
 			keys:   make([]K, len(n.keys)-midIdx, cap),

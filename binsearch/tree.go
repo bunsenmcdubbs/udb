@@ -1,20 +1,22 @@
-package data
+// Package binsearch implements a binary search tree using generic types. Included as a practice/warmup exercise without
+// practical purpose.
+package binsearch
 
 import (
 	"errors"
 	"golang.org/x/exp/constraints"
 )
 
-type BST[T constraints.Ordered] struct {
-	left  *BST[T]
-	right *BST[T]
+type Tree[T constraints.Ordered] struct {
+	left  *Tree[T]
+	right *Tree[T]
 	value T
 }
 
-func (b *BST[T]) Insert(v T) (*BST[T], error) {
+func (b *Tree[T]) Insert(v T) (*Tree[T], error) {
 	var err error
 	if b == nil {
-		return &BST[T]{value: v}, nil
+		return &Tree[T]{value: v}, nil
 	} else if v < b.value {
 		b.left, err = b.left.Insert(v)
 	} else if v > b.value {
@@ -25,7 +27,7 @@ func (b *BST[T]) Insert(v T) (*BST[T], error) {
 	return b, err
 }
 
-func (b *BST[T]) Find(value T) bool {
+func (b *Tree[T]) Find(value T) bool {
 	switch {
 	case b == nil:
 		return false
@@ -40,14 +42,14 @@ func (b *BST[T]) Find(value T) bool {
 	}
 }
 
-func (b *BST[T]) PreOrder() []T {
+func (b *Tree[T]) PreOrder() []T {
 	if b == nil {
 		return nil
 	}
 	return append(append([]T{b.value}, b.left.PreOrder()...), b.right.PreOrder()...)
 }
 
-func (b *BST[T]) InOrder() []T {
+func (b *Tree[T]) InOrder() []T {
 	if b == nil {
 		return nil
 	}

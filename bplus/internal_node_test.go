@@ -154,6 +154,10 @@ func (f fakeNode) Value(_ int) (string, error) {
 	panic("not implemented")
 }
 
+func (f fakeNode) IteratorAt(int) *Iterator[int, string] {
+	panic("not implemented")
+}
+
 func (f fakeNode) children() []Node[int, string] {
 	panic("not implemented")
 }

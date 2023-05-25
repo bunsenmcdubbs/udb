@@ -20,6 +20,10 @@ func NewTree[K constraints.Ordered, V any](branchingFactor int) *Tree[K, V] {
 	}
 }
 
+func (t *Tree[K, V]) Value(key K) (V, error) {
+	return t.root.Value(key)
+}
+
 func (t *Tree[K, V]) Insert(key K, value V) {
 	_, newNode := t.root.Insert(t.b, key, value)
 	if newNode != nil {
@@ -39,6 +43,10 @@ func (t *Tree[K, V]) Iterator() *Iterator[K, V] {
 	}
 }
 
+func (t *Tree[K, V]) IteratorAt(key K) *Iterator[K, V] {
+	return t.root.IteratorAt(key)
+}
+
 func (t *Tree[K, V]) debugString() string {
 	sb := &strings.Builder{}
 	t.root.debugString(sb)
@@ -53,6 +61,7 @@ type nodeSplit[K constraints.Ordered, V any] struct {
 type Node[K constraints.Ordered, V any] interface {
 	Insert(cap int, key K, value V) (new bool, split *nodeSplit[K, V])
 	Value(K) (V, error)
+	IteratorAt(K) *Iterator[K, V]
 	children() []Node[K, V]
 	debugString(*strings.Builder)
 }

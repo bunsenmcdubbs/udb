@@ -51,6 +51,10 @@ func (n *InternalNode[K, V]) Value(key K) (V, error) {
 	return n.child(key).Value(key)
 }
 
+func (n *InternalNode[K, V]) IteratorAt(key K) *Iterator[K, V] {
+	return n.child(key).IteratorAt(key)
+}
+
 func (n *InternalNode[K, V]) children() []Node[K, V] {
 	return n.values
 }

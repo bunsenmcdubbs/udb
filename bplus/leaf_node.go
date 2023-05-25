@@ -16,7 +16,7 @@ type LeafNode[K constraints.Ordered, V any] struct {
 
 func (n *LeafNode[K, V]) Insert(cap int, newKey K, newVal V) (new bool, split *nodeSplit[K, V]) {
 	idx, exists := find(n.keys, newKey)
-	if exists {
+	if exists { // TODO remove overwrite, INSERT needs to always append, not update
 		n.values[idx] = newVal
 		return false, nil
 	}
@@ -66,6 +66,11 @@ func (n *LeafNode[K, V]) Value(key K) (V, error) {
 		return v, errors.New("not found")
 	}
 	return n.values[idx], nil
+}
+
+func (n *LeafNode[K, V]) IteratorAt(key K) *Iterator[K, V] {
+	idx, _ := find(n.keys, key)
+	return &Iterator[K, V]{idx, n}
 }
 
 func (n *LeafNode[K, V]) children() []Node[K, V] {

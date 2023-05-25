@@ -8,6 +8,12 @@ type Iterator[K constraints.Ordered, V any] struct {
 }
 
 func (i *Iterator[K, V]) Next() (K, V, bool) {
+	if len(i.node.keys) == 0 {
+		var k K
+		var v V
+		return k, v, true
+	}
+
 	k := i.node.keys[i.idx]
 	v := i.node.values[i.idx]
 
